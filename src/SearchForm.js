@@ -5,11 +5,12 @@ class SearchForm extends Component {
     render(){
         return(
             <div className='searchForm'>
-                <form>
+                <form onSubmit={e => this.props.onSubmitForm(e)}>
                     <label htmlFor=''>Search: </label>
                     <input
                         type='text'
-                        placeholder='book title search' 
+                        placeholder='book title search'
+                        onChange={e => this.props.handleSearchTermUpdate(e.target.value)}
                     />
                     <button type='submit'>Search</button>
                 </form>
