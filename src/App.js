@@ -28,7 +28,9 @@ class App extends Component {
     super(props);
     this.state = {
       books: [],
-      searchTerm: ''
+      searchTerm: '',
+      printType: 'all',
+      bookType: 'none'
     };
   }
 
@@ -38,15 +40,31 @@ class App extends Component {
       searchTerm: newTerm
     })
   }
-  
+
+  updatePrintType = (printFilter) => {
+    this.setState({
+      printType: printFilter
+    })
+  }
+
+  updateBookType = (bookFilter) => {
+    this.setState({
+      bookType: bookFilter
+    })
+  }
+
   searchBook = (e) => {
     e.preventDefault();
     const url = 'https://www.googleapis.com/books/v1/volumes?q=';
     const gBookKey = '&key=AIzaSyAT83fIniBQ5OTIynRpIFtsh7aifWGQgR4';
-    // const maxResults = '&maxResults=25';
+    const maxResults = '&maxResults=25';
     const options = {method: 'GET'};
     const searchTerm = this.state.searchTerm;
-    const fullURL = url + searchTerm + gBookKey;
+    const printType = '&printType=' + this.state.printType;
+    const bookType = (this.state.bookType === 'none')
+      ? ''
+      : '&filter=' + this.state.bookType;
+    const fullURL = url + searchTerm + printType + bookType + maxResults + gBookKey;
     console.log(fullURL);
 
     fetch(fullURL, options)
@@ -84,7 +102,9 @@ class App extends Component {
           onSubmitForm={this.searchBook}
           handleSearchTermUpdate={this.updateSearchTerm}
         />
-        <FilterBox />
+        <FilterBox 
+          changePrintType={this.updatePrintType}
+          changeBookType={this.updateBookType}/>
         {error}
         <BookList books={this.state.books.items}/>
       </main>

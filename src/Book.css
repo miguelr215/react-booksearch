@@ -24,3 +24,15 @@
 .book_img {
     margin: 10px;
 }
+
+.book_pricing_top {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid blue;
+}
+
+.book_pricing_bottom {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid blue;
+}
